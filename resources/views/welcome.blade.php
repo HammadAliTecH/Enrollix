@@ -1,0 +1,1 @@
+@extends('pages.payments.payment_history')

@@ -1,0 +1,172 @@
+.side_bar
+{
+    height: 100vh;
+    background-color: white;
+    border-right: 1px solid gray;
+
+}
+ul{
+    list-style-type: none;
+     padding-left: 0;
+    margin: 0;
+    
+}
+a{
+
+        text-decoration: none;
+        color: rgb(94, 94, 94);
+        text-transform: capitalize;
+   
+}
+.user_inner
+{
+        margin-left: 47px;
+}
+li
+{
+
+    font-size: 15px;
+    Padding-top: 7px;
+    padding-bottom: 7px;
+
+}
+.arrow{
+    transition:0.3s;
+    display: inline-block;
+     transform:rotate(0deg);
+}
+
+.arrow.rotate{
+    transform:rotate(90deg);
+}
+.active_1
+{
+    font-weight: bold;
+    color: white;
+    background-color: navy;
+ 
+    
+
+}
+ .hight_light
+{
+    
+    
+    color: navy;
+    
+   
+    
+}
+.hight_light::before
+{
+    padding-right: 6px;
+    content: "●";
+    font-weight: bold;
+    color: navy;
+   
+    
+}
+.options_heading
+{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.dashboard_head
+{
+    font-size: 20px;
+    color: navy;
+    font-weight: bold;
+}
+.dashboard_img
+{
+    height: 100px;
+    width: 100px;
+}
+/* NAVBAR CSS */
+.nav_bar
+{
+    border-bottom: 1px solid gray;
+    height: 80px;
+    background-color: white;
+    border-bottom: 1px solid gray ;
+}
+.img_box
+{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: red;
+}
+.name_text
+{
+    font-size: 15px;
+}
+.role_text
+{
+    font-size: 12px;
+    color: navy;
+}   
+.drop_profile
+{
+    height: 70px;
+    width: 100%;
+    background-color: navy;
+}
+.img_list_user
+{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+.user_model_pic
+{
+    height: 110px;
+    width: 110px;
+    border-radius: 50%;
+}
+.user_model_pic_1
+{
+    height: 110px;
+    width: 110px;
+}
+.img_list_course
+{
+    height: 60px;
+    width: 70px;
+    border-radius: 10px;
+}
+
+
+    .badge_blink {
+    animation: badge_blink 1s infinite;
+}
+
+@keyframes badge_blink {
+    50% {
+        opacity: 0;
+    }
+}
+.role_permission_box_size
+{
+    width: 240px;
+    height: 60px;
+}
+
+#course_update_model .select2-container {
+    width: 100% !important;
+}
+
+#course_update_model .select2-container--open {
+    z-index: 99999 !important;
+}
+
+#course_update_model .select2-dropdown {
+    z-index: 99999 !important;
+}
+.select2-container--open {
+    z-index: 9999 !important;
+}
