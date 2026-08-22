@@ -12,7 +12,8 @@ class PaymentHistoryController extends Controller
      */
     public function index()
     {
-        //
+        $payment_history = Payment_history::all();
+        return view('pages.payments.payment_history',compact('payment_history'));
     }
 
     /**

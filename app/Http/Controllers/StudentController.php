@@ -295,7 +295,7 @@ class StudentController extends Controller
     $studentCourse = Student_course::create([
         'student_id'    => $validated['student_id'],
         'course_id'     => $validated['course_id'],
-        'payment_plan'  => $course->payment_type,
+        'payment_map'  => $course->payment_type,
         'starting_date' => $startingDate,
         'ending_date'   => $endingDate,
     ]);

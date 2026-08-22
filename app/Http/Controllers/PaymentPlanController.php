@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Payment_plan , Student_course};
+use App\Models\{Payment_plan , Student_course, Student , Payment_history};
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentPlanController extends Controller
 {
@@ -12,9 +13,54 @@ class PaymentPlanController extends Controller
      */
     public function index()
     {
-        $student_courses = Student_course::with(['student', 'course.user'])->get();
+        $student_courses = Student_course::with(['student', 'course.user', 'payment_plans'])->get();
         return view('pages.payments.fee_book', compact('student_courses'));
     }
+
+   public function getPaymentPlanDetails($id)
+    {
+        $payment_plan = Payment_plan::where('student_course_id', $id)->get();
+        return response()->json($payment_plan);
+    }
+
+public function get_student_payment_shedule(Request $request)
+{
+    $student_payment_shedule = Student::where('cnic_number', $request->cnic_number)
+        ->with([
+            'student_courses.course',
+            'student_courses.payment_plans' => function ($query) {
+                $query->where('status', 'pending');
+            }
+        ])
+        ->get();
+
+    return response()->json($student_payment_shedule);
+}
+
+public function confirmPayment(Request $request)
+{
+    $request->validate([
+        'payment_plan_id' => 'required|exists:payment_plans,id',
+        'payment_mode'     => 'required|string',
+    ]);
+
+    // 1) Payment plan status update -> paid
+    $payment_plan = Payment_plan::findOrFail($request->payment_plan_id);
+    $payment_plan->status = 'paid';
+    $payment_plan->save();
+
+    // 2) Payment history entry (amount plan se hi le liya, kyunki form se nahi aa raha)
+    Payment_history::create([
+        'pay_amount'      => $payment_plan->fee_per_installment,
+        'payment_mode'    => $request->payment_mode,
+        'pay_date'        => now(),
+        'user_id'         => 1,
+        'payment_plan_id' => $payment_plan->id,
+    ]);
+
+    return redirect()->back()->with('success', 'Payment recorded successfully.');
+}
+
 
     /**
      * Show the form for creating a new resource.

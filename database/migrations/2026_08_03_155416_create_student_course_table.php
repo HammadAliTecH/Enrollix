@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('course_id')->constrained('courses')
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->string('payment_plan');
+            $table->string('payment_map');
             $table->date('starting_date');
             $table->date('ending_date');
             $table->timestamps();

@@ -13,14 +13,14 @@ class Student_course extends Model
    protected $fillable = [
     'student_id',
     'course_id',
-    'payment_plan',
+    'payment_map',
     'starting_date',
     'ending_date',
    ];
 
    public function payment_plans()
    {
-      return $this->hasMany(Payment_plan::class);
+      return $this->hasMany(Payment_plan::class ,'student_course_id' );
    }
    public function student()
    {
@@ -30,4 +30,5 @@ class Student_course extends Model
    {
       return $this->belongsTo(Course::class);   
    }
+ 
 }

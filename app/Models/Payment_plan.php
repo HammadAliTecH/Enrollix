@@ -30,4 +30,5 @@ class Payment_plan extends Model
   {
     return $this->hasMany(Payment_history::class);
   }
+
 }

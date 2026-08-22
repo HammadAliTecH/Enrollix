@@ -33,7 +33,7 @@
 
     
 
-    <table class="table table-bordered mt-3 text-center align-middle">
+       <table class="table table-bordered mt-3 text-center align-middle">
         <thead class="table-dark">
             <tr>
                 <th scope="col">Plan ID</th>
@@ -46,25 +46,44 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>PLN-1001</td>
-                <td>1 of 3</td>
-                <td>10,000</td>
-                <td>01-06-2026</td>
-                <td>Hammad Ali</td>
-                <td><span class="badge text-bg-secondary">Cash</span></td>
-                <td>
-                    <button type="button"
-                            class="btn btn-outline-info"
-                            data-bs-toggle="modal"
-                            data-bs-target="#payment_history_details_model"
-                            title="See Details">
-                        <i class="ri-eye-line"></i>
-                    </button>
-                </td>
-            </tr>
+
+            @forelse ($payment_history as $history)
+                <tr>
+                    <td>PLN-{{ $history->payment_plan->id ?? '-' }}</td>
+                    <td>
+                        {{ $history->payment_plan->installment_no ?? '-' }}
+                        of
+                        {{ $history->payment_plan->total_installments ?? '-' }}
+                    </td>
+                    <td>{{ number_format($history->pay_amount, 0) }}</td>
+                    <td>{{ \Carbon\Carbon::parse($history->pay_date)->format('d-m-Y') }}</td>
+                    <td>{{ $history->user->name ?? '-' }}</td>
+                    <td>
+                        <span class="badge text-bg-secondary">
+                            {{ ucfirst($history->payment_mode) }}
+                        </span>
+                    </td>
+                    <td>
+                        <button type="button"
+                                class="btn btn-outline-info"
+                                data-bs-toggle="modal"
+                                data-bs-target="#payment_history_details_model"
+                                data-id="{{ $history->id }}"
+                                title="See Details">
+                            <i class="ri-eye-line"></i>
+                        </button>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="7">No payment history found.</td>
+                </tr>
+            @endforelse
+
         </tbody>
     </table>
+
+    <!-- Pagination abhi ke liye skip -->
 
     <div class="d-flex justify-content-center">
         <nav aria-label="...">

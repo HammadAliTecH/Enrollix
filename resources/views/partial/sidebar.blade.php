@@ -149,7 +149,7 @@
                 <li>
                     <a href="#financeManagement"
                        data-bs-toggle="collapse"
-                       class="options_heading {{ request()->routeIs('payment_plan.index', 'payment_history.index') ? 'active_1' : '' }}">
+                       class="options_heading {{ request()->routeIs('payment_plan.index', 'payment_history.index' ,'pay_fee') ? 'active_1' : '' }}">
                         <span>
                             <i class="ri-money-dollar-circle-line"></i>
                             Finance
@@ -158,7 +158,7 @@
                         <i class="ri-arrow-right-s-line arrow"></i>
                     </a>
 
-                    <ul class="collapse {{ request()->routeIs('payment_plan.index', 'payment_history.index') ? 'show' : '' }}"
+                    <ul class="collapse {{ request()->routeIs('payment_plan.index', 'payment_history.index','pay_fee') ? 'show' : '' }}"
                         id="financeManagement"
                         data-bs-parent="#sidebarAccordion">
 
@@ -167,15 +167,15 @@
                                 Fee Book
                             </a>
                         </li>
-
-                        <li class="inner_options">
-                            <a href="pay_fee.html" class="user_inner">
+                      
+                        <li class="inner_options {{ request()->routeIs('pay_fee') ? 'hight_light' : '' }} ">
+                            <a href="{{ route('pay_fee') }}" class="user_inner">
                                 Pay Fee
                             </a>
                         </li>
 
-                        <li class="inner_options">
-                            <a href="history.html" class="user_inner">
+                        <li class="inner_options {{ request()->routeIs('payment_history.index') ? 'hight_light' : '' }}">
+                            <a href="{{ route('payment_history.index') }}" class="user_inner">
                                 Payment History
                             </a>
                         </li>

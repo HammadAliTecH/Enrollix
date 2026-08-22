@@ -151,7 +151,7 @@ class DatabaseSeeder extends Seeder
             $enrollment = Student_course::updateOrCreate(
                 ['student_id' => $student->id, 'course_id' => $course->id],
                 [
-                    'payment_plan' => $course->payment_type,
+                    'payment_map' => $course->payment_type,
                     'starting_date' => $startingDate,
                     'ending_date' => $endingDate,
                 ]

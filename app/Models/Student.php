@@ -37,6 +37,11 @@ class Student extends Model
                     ->withTimestamps();
     }
 
+public function student_courses()
+{
+    return $this->hasMany(Student_course::class, 'student_id');
+}
+
 
 
 }
