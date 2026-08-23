@@ -5,106 +5,120 @@
     <!-- CONTENT AREA -->
     <div class="row g-0">
         <div class="col-lg-12 g-0 px-3 pt-2">
-            <div class="card w-100">
+            <div class="card page_card w-100">
                 <div class="card-body">
-                    <div class="card-title">
-                        <div class="d-flex justify-content-between ">
-                                <div><h3>STUDENTS LIST</h3></div>
-                                <div>
-                                     <input type="text"
-                                       name="user_email"
-                                       id="user_email"
-                                       class="form-control"
-                                       placeholder="Search By Name">
-                                </div>
+
+                    <div class="card-title mb-0">
+
+                        <div class="d-flex justify-content-between align-items-center page_head">
+                            <div>
+                                <h3 class="page_title mb-0">Students List</h3>
+                                <p class="page_subtitle mb-0">Manage every enrolled student's record</p>
                             </div>
 
-            @if(session('success'))
-                <div class="d-flex justify-content-center">
-                    <div class="alert alert-success alert-dismissible fade show w-75" role="alert">
-                        {{ session('success') }}
-
-                        <button type="button"
-                                class="btn-close"
-                                data-bs-dismiss="alert"
-                                aria-label="Close"></button>
-                    </div>
-                </div>
-            @endif
-
-            @if($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+                            <div class="search_wrap">
+                                <i class="ri-search-line search_icon"></i>
+                                <input type="text"
+                                       name="user_email"
+                                       id="user_email"
+                                       class="form-control search_input"
+                                       placeholder="Search by name">
+                            </div>
                         </div>
+
+                        @if(session('success'))
+                            <div class="d-flex justify-content-center">
+                                <div class="alert alert-success alert-dismissible fade show w-75" role="alert">
+                                    {{ session('success') }}
+
+                                    <button type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                     </div>
 
                     <div>
-                        <table class="table table-bordered ">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th scope="col">id</th>
-                                    <th scope="col">Picture</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">CNIC</th>
-                                    <th scope="col">Father Name</th>
-                                    <th scope="col">Cell Number</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
+                        <div class="table_wrap">
+                            <div class="table-responsive">
+                                <table class="table app_table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Picture</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">CNIC</th>
+                                            <th scope="col">Father Name</th>
+                                            <th scope="col">Cell Number</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
 
-                            <tbody>
-                                @foreach ($students as $student)
-                                    <tr>
-                                        <th scope="row">{{ $student->id }}</th>
+                                    <tbody>
+                                        @foreach ($students as $student)
+                                            <tr>
+                                                <th scope="row">{{ $student->id }}</th>
 
-                                        <td>
-                                            <img src="{{ asset('students_data/students_profile_images/' . $student->image) }}"
-                                                 alt=""
-                                                 class="img-fluid img_list_user">
-                                        </td>
+                                                <td>
+                                                    <img src="{{ asset('students_data/students_profile_images/' . $student->image) }}"
+                                                         alt=""
+                                                         class="img-fluid img_list_user">
+                                                </td>
 
-                                        <td>{{ $student->name }}</td>
-                                        <td>{{ $student->cnic_number }}</td>
-                                        <td>{{ $student->father_name }}</td>
-                                        <td>{{ $student->father_cell_number }}</td>
+                                                <td>{{ $student->name }}</td>
+                                                <td>{{ $student->cnic_number }}</td>
+                                                <td>{{ $student->father_name }}</td>
+                                                <td>{{ $student->father_cell_number }}</td>
 
-                                        <td>
-                                            <button class="btn btn-outline-warning edit_student"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#student_update_model"
-                                                    data-id="{{ $student->id }}"
-                                                    data-student="{{ $student }}">
-                                                <i class="ri-edit-line"></i>
-                                            </button>
+                                                <td>
+                                                    <button class="action_btn action_btn_edit edit_student"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#student_update_model"
+                                                            data-id="{{ $student->id }}"
+                                                            data-student="{{ $student }}"
+                                                            title="Edit">
+                                                        <i class="ri-edit-line"></i>
+                                                    </button>
 
-                                            <button class="btn btn-outline-danger ms-2 delete_student"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#student_delete_model"
-                                                    data-id="{{ $student->id }}">
-                                                <i class="ri-delete-bin-line"></i>
-                                            </button>
+                                                    <button class="action_btn action_btn_delete delete_student"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#student_delete_model"
+                                                            data-id="{{ $student->id }}"
+                                                            title="Delete">
+                                                        <i class="ri-delete-bin-line"></i>
+                                                    </button>
 
-                                            <button class="btn btn-outline-success ms-2 view_student"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#student_view_model"
-                                                    data-student="{{ $student }}">
-                                                <i class="ri-eye-line"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                                    <button class="action_btn action_btn_view view_student"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#student_view_model"
+                                                            data-student="{{ $student }}"
+                                                            title="View">
+                                                        <i class="ri-eye-line"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
-                        <div class="d-flex justify-content-center">
-                            <nav aria-label="...">
-                                <ul class="pagination">
+                        <div class="d-flex justify-content-center mt-3">
+                            <nav aria-label="Students pagination">
+                                <ul class="pagination app_pagination">
                                     <li class="page-item">
                                         <a href="#" class="page-link">Previous</a>
                                     </li>
@@ -162,7 +176,7 @@
                         <input type="file"
                                class="form-control"
                                name="image"
-                               id="student_attributes">
+                               id="student_image_input">
                     </div>
                 </div>
 
@@ -170,7 +184,7 @@
 
                     <!-- Personal Information -->
                     <div class="col-12">
-                        <h6 class="bg-dark text-white p-2 rounded">Personal Information</h6>
+                        <h6 class="modal_section_title">Personal Information</h6>
                     </div>
 
                     <div class="col-md-6">
@@ -246,7 +260,7 @@
 
                     <!-- Contact Information -->
                     <div class="col-12 mt-4">
-                        <h6 class="bg-dark text-white p-2 rounded">Contact Information</h6>
+                        <h6 class="modal_section_title">Contact Information</h6>
                     </div>
 
                     <div class="col-md-6">
@@ -281,7 +295,7 @@
 
                     <!-- Educational Information -->
                     <div class="col-12 mt-4">
-                        <h6 class="bg-dark text-white p-2 rounded">Educational Information</h6>
+                        <h6 class="modal_section_title">Educational Information</h6>
                     </div>
 
                     <div class="col-md-6">
@@ -326,7 +340,7 @@
 
                     <!-- Documents -->
                     <div class="col-12 mt-4">
-                        <h6 class="bg-dark text-white p-2 rounded">Documents</h6>
+                        <h6 class="modal_section_title">Documents</h6>
                     </div>
 
                     <div class="col-md-6">
@@ -436,7 +450,7 @@
 
             <div class="mt-3">
 
-                <table class="table table-bordered">
+                <table class="table table-bordered view_info_table">
 
                     <tbody>
 

@@ -301,62 +301,43 @@
 
 <!-- ======== PAYMENT DETAILS ============ -->
 <x-modal-component
-    modal_id="confirm_payment_model"
-    modal_title="PAY FEE"
->
-    <div class="modal-body">
-        <form action="{{ route('payment_plan.confirm_payment') }}" method="post">
-            @csrf
+<div class="modal fade" id="payment_plan_details_model" tabindex="-1" aria-hidden="true">
 
-            <b class="d-flex justify-content-center text-center mb-3">
-                Have you received this payment? Once confirmed, this installment will be marked as Paid.
-            </b>
+    <div class="modal-dialog modal-dialog-centered">
 
-            <div class="mb-3">
-                <label for="payment_mode" class="form-label">
-                    Payment Mode
-                </label>
+        <div class="modal-content">
 
-                <input type="hidden" id="hidden_payment_plan_id" name="payment_plan_id">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="ri-eye-line me-2"></i>
+                    Payment Reference
+                </h5>
 
-                <select name="payment_mode"
-                        id="payment_mode"
-                        class="form-select"
-                        required>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
 
-                    <option value="" selected disabled>
-                        Select Payment Mode
-                    </option>
+            <div class="modal-body">
 
-                    <option value="bank">
-                        Bank
-                    </option>
+                <div id="payment_plan_body_content" ></div>
 
-                    <option value="cash">
-                        Cash
-                    </option>
+            </div>
 
-                </select>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
             </div>
 
         </div>
 
-        <x-slot name="modal_footer">
-            <button type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal">
-                Cancel
-            </button>
+    </div>
 
-            <button type="submit"
-                    class="btn btn-success"
-                    data-bs-dismiss="modal">
-                Ok, Payment Received
-            </button>
-            </form>
-        </x-slot>
-
-    </x-modal-component>
+</div>
 
 
 

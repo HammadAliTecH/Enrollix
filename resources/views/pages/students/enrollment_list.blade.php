@@ -19,87 +19,99 @@
                 </div>
             @endif
 
-            <div class="card w-100">
+            <div class="card page_card w-100">
                 <div class="card-body">
-                    <div class="card-title">
-                        <div class='d-flex justify-content-between'>
+
+                    <div class="card-title mb-0">
+                        <div class="d-flex justify-content-between align-items-center page_head">
                             <div>
-                                <h3>Enrollments List</h3>
+                                <h3 class="page_title mb-0">Enrollments List</h3>
+                                <p class="page_subtitle mb-0">Track every student's active course enrollment</p>
                             </div>
 
-                            <div class="d-flex justify-content-center gap-3">
-                                <select name="" id="" class="form-control">
-                                    <option value="">FILTER BY COURSES <i class="ri-arrow-down-s-line ms-2"></i></option>
-                                    <option value="">LARAVEL</option>
-                                    <option value="">PHP & MYSQL</option>
+                            <div class="d-flex align-items-center filters_row">
+                                <select name="" id="" class="form-control filter_select">
+                                    <option value="">Filter by course</option>
+                                    <option value="">Laravel</option>
+                                    <option value="">PHP &amp; MySQL</option>
                                 </select>
 
-                                <input type="text"
-                                       name="user_email"
-                                       id="user_email"
-                                       class="form-control"
-                                       placeholder="Search By cnic">
+                                <div class="search_wrap">
+                                    <i class="ri-search-line search_icon"></i>
+                                    <input type="text"
+                                           name="user_email"
+                                           id="user_email"
+                                           class="form-control search_input"
+                                           placeholder="Search by CNIC">
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <table class="table table-bordered mt-3">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th scope="col">id</th>
-                                    <th scope="col">Student Name</th>
-                                    <th scope="col">Course Name</th>
-                                    <th scope="col">Register Date</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Starting Date</th>
-                                    <th scope="col">Ending Date</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
+                        <div class="table_wrap mt-3">
+                            <div class="table-responsive">
+                                <table class="table app_table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Student Name</th>
+                                            <th scope="col">Course Name</th>
+                                            <th scope="col">Register Date</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Starting Date</th>
+                                            <th scope="col">Ending Date</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
 
-                            <tbody>
-                                @foreach ($student_courses as $student_course)
-                                    <tr>
-                                        <th scope="row">{{ $student_course->id }}</th>
-                                        <td>{{ $student_course->student->name }}</td>
-                                        <td>{{ $student_course->course->name }}</td>
-                                        <td>{{ $student_course->created_at->format('d/m/Y') }}</td>
-                                        <td>
-                                            <div class="badge bg-success text-white">In Progess</div>
-                                        </td>
-                                        <td>{{ $student_course->starting_date }}</td>
-                                        <td>{{ $student_course->ending_date }}</td>
-                                        <td>
-                                            <button class="btn btn-outline-info show_enrollment"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#show_enrollment_data"
-                                                    data-enrollment="{{ $student_course }}">
-                                                <i class="ri-file-text-line"></i>
-                                            </button>
+                                    <tbody>
+                                        @foreach ($student_courses as $student_course)
+                                            <tr>
+                                                <th scope="row">{{ $student_course->id }}</th>
+                                                <td>{{ $student_course->student->name }}</td>
+                                                <td>{{ $student_course->course->name }}</td>
+                                                <td>{{ $student_course->created_at->format('d/m/Y') }}</td>
+                                                <td>
+                                                    <span class="status_pill">In Progress</span>
+                                                </td>
+                                                <td>{{ $student_course->starting_date }}</td>
+                                                <td>{{ $student_course->ending_date }}</td>
+                                                <td>
+                                                    <button class="action_btn action_btn_view show_enrollment"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#show_enrollment_data"
+                                                            data-enrollment="{{ $student_course }}"
+                                                            title="View">
+                                                        <i class="ri-file-text-line"></i>
+                                                    </button>
 
-                                            <button class="btn btn-outline-warning ms-2 edit_enrollment"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#enrollment_update_model"
-                                                    data-id="{{ $student_course->id }}">
-                                                <i class="ri-edit-line"></i>
-                                            </button>
+                                                    <button class="action_btn action_btn_edit edit_enrollment"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#enrollment_update_model"
+                                                            data-id="{{ $student_course->id }}"
+                                                            title="Edit">
+                                                        <i class="ri-edit-line"></i>
+                                                    </button>
 
-                                            <button class="btn btn-outline-danger ms-2 delete_enrollment"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#enrollment_delete_model"
-                                                    data-id="{{ $student_course->id }}">
-                                                <i class="ri-delete-bin-line"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                                    <button class="action_btn action_btn_delete delete_enrollment"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#enrollment_delete_model"
+                                                            data-id="{{ $student_course->id }}"
+                                                            title="Delete">
+                                                        <i class="ri-delete-bin-line"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
-                        <div class="d-flex justify-content-center">
-                            <nav aria-label="...">
-                                <ul class="pagination">
+                        <div class="d-flex justify-content-center mt-3">
+                            <nav aria-label="Enrollments pagination">
+                                <ul class="pagination app_pagination">
                                     <li class="page-item">
                                         <a href="#" class="page-link">Previous</a>
                                     </li>
@@ -137,11 +149,11 @@
 
             <div class="modal-content" id="enrollment_print_area">
 
-                <div class="modal-header no-print">
+                <div class="modal-header modal_brand_header no-print">
                     <h5 class="modal-title">Enrollment Details</h5>
 
                     <button type="button"
-                            class="btn-close"
+                            class="btn-close btn-close-white"
                             data-bs-dismiss="modal">
                     </button>
                 </div>
@@ -179,7 +191,7 @@
                     </div>
 
                     <!-- STUDENT DETAIL -->
-                    <table class="table table-bordered mb-4">
+                    <table class="table table-bordered mb-4 view_info_table">
                         <tbody>
 
                             <tr class="table-dark">
@@ -288,7 +300,7 @@
                     </table>
 
                     <!-- COURSE DETAIL -->
-                    <table class="table table-bordered table-sm mb-0">
+                    <table class="table table-bordered table-sm mb-0 view_info_table">
                         <tbody>
 
                             <tr class="table-dark">
@@ -296,27 +308,27 @@
                             </tr>
 
                             <tr>
-                                <th class="w-25">NAME</th>
+                                <th class="w-25">Name</th>
                                 <td id="enroll_course_name"></td>
                             </tr>
 
                             <tr>
-                                <th>INSTRUCTOR</th>
+                                <th>Instructor</th>
                                 <td id="enroll_course_instructor"></td>
                             </tr>
 
                             <tr>
-                                <th>DURATION</th>
+                                <th>Duration</th>
                                 <td id="enroll_course_duration"></td>
                             </tr>
 
                             <tr>
-                                <th>PAYMENT PLAN</th>
+                                <th>Payment Plan</th>
                                 <td id="enroll_course_payment_plan"></td>
                             </tr>
 
                             <tr>
-                                <th>INSTALLMENTS</th>
+                                <th>Installments</th>
                                 <td id="enroll_course_installments"></td>
                             </tr>
 
@@ -347,9 +359,9 @@
                     </button>
 
                     <button type="button"
-                            class="btn btn-primary"
+                            class="btn_gradient btn_gradient_sm"
                             onclick="printEnrollment()">
-                        <i class="ri-printer-line me-1"></i>
+                        <i class="ri-printer-line"></i>
                         Print
                     </button>
 
@@ -417,8 +429,8 @@
             <div class="modal-body">
 
                 <div class="col-lg-12">
-                    <div class="form-label mt-2">
-                        <label for="search_user_name">
+                    <div class="field_label mt-2">
+                        <label for="update_student_id">
                             Search By CNIC <span class="text-danger">*</span>
                         </label>
 
@@ -435,8 +447,8 @@
                 </div>
 
                 <div class="col-lg-12">
-                    <div class="form-label mt-2">
-                        <label for="search_course_name">
+                    <div class="field_label mt-3">
+                        <label for="update_course_id">
                             Search By Course Name <span class="text-danger">*</span>
                         </label>
 
@@ -465,7 +477,7 @@
 
                 <button
                     type="submit"
-                    class="btn btn-danger">
+                    class="btn_gradient btn_gradient_sm">
                     Save Changes
                 </button>
 
@@ -507,14 +519,14 @@
             visibility: visible;
         }
 
-        #enrollment_view_model {
+        #show_enrollment_data {
             display: block !important;
             position: absolute;
             inset: 0;
             background: #fff;
         }
 
-        #enrollment_view_model .modal-dialog {
+        #show_enrollment_data .modal-dialog {
             max-width: 100% !important;
             margin: 0 !important;
             transform: none !important;

@@ -45,7 +45,7 @@ class User extends Authenticatable
         return $this->hasMany(Payment_history::class);
     }
 
-    // CUSTOM LOGIC FUNTION TO CHCEK PERMISSION
+    // CUSTOM LOGIC FUNTION TO CHCEK USER ROLE HAS  PERMISSION
     public function hasPermission(string $permission) :bool
     {
        return $this->roles

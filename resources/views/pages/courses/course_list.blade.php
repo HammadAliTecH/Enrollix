@@ -251,11 +251,11 @@
                         class="form-select"
                     >
                         <option value="">---------</option>
-                        <option value="none">NONE</option>
-                        <option value="per month">PER MONTH</option>
-                        <option value="per two months">PER TWO MONTHS</option>
-                        <option value="per three months">PER THREE MONTHS</option>
-                        <option value="half year">HALF YEAR</option>
+                          <option value="none">NONE</option>
+                                    <option value="1">ONE TIME</option>
+                                    <option value="2">TWO TIMES</option>
+                                    <option value="3">THREE TIMES</option>
+                                    <option value="6">HALF YEAR</option>
                     </select>
                 </div>
 

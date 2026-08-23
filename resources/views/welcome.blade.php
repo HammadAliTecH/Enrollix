@@ -1,1 +1,1 @@
-@extends('pages.payments.payment_history')
+@extends('auth.login');

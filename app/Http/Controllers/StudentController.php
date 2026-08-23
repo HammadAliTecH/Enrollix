@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\{Student , Student_course , Course , Payment_plan , Payment_history};
+use App\Models\{Student, Student_course, Course, Payment_plan, Payment_history};
 use Illuminate\Http\Request;
 use App\Http\Requests\{
-    StudentRequest  , UpdateStudentRequest
+    StudentRequest, UpdateStudentRequest
 };
 
 class StudentController extends Controller
@@ -246,7 +246,6 @@ class StudentController extends Controller
                     'id'   => $student->id,
                     'text' => $student->name,
                 ];
-
             });
 
         return response()->json($students);
@@ -256,7 +255,7 @@ class StudentController extends Controller
     public function fetchStudentAndCourseData(Request $request)
     {
         $studentId = $request->student_id;
-        $courseId  = $request->course_id;
+        $courseId = $request->course_id;
 
         $student = Student::find($studentId);
         $course = Course::find($courseId);
@@ -268,95 +267,97 @@ class StudentController extends Controller
     }
 
     // ---------------------------------------------------------------------
-    // make enrollment
+    // Make enrollment
     public function makeEnrollment(Request $request)
-{
-    $validated = $request->validate([
-        'student_id' => 'required|exists:students,id',
-        'course_id'  => 'required|exists:courses,id',
-    ]);
+    {
+        $validated = $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'course_id'  => 'required|exists:courses,id',
+        ]);
 
-    // 1. Duplicate enrollment check
-    $alreadyEnrolled = Student_course::where('student_id', $validated['student_id'])
-        ->where('course_id', $validated['course_id'])
-        ->exists();
+        // 1. Check for duplicate enrollment
+        $alreadyEnrolled = Student_course::where('student_id', $validated['student_id'])
+            ->where('course_id', $validated['course_id'])
+            ->exists();
 
-    if ($alreadyEnrolled) {
-        return back()->with('error', 'Ye student is course mein pehle se enrolled hai.');
-    }
+        if ($alreadyEnrolled) {
+            return back()->with('error', 'This student is already enrolled in this course.');
+        }
 
-    // 2. Course se data lo
-    $course = Course::findOrFail($validated['course_id']);
+        // 2. Get data from the course
+        $course = Course::findOrFail($validated['course_id']);
 
-    $startingDate = Carbon::today();
-    $endingDate   = $this->calculateEndingDate($startingDate, $course->duration);
+        $startingDate = Carbon::today();
+        $endingDate = $this->calculateEndingDate($startingDate, $course->duration);
 
-    // 3. Pivot record create karo — save the instance, don't refetch
-    $studentCourse = Student_course::create([
-        'student_id'    => $validated['student_id'],
-        'course_id'     => $validated['course_id'],
-        'payment_map'  => $course->payment_type,
-        'starting_date' => $startingDate,
-        'ending_date'   => $endingDate,
-    ]);
+        // 3. Create the pivot record — save the instance, do not refetch
+        $studentCourse = Student_course::create([
+            'student_id'    => $validated['student_id'],
+            'course_id'     => $validated['course_id'],
+            'payment_map'   => $course->payment_type,
+            'starting_date' => $startingDate,
+            'ending_date'   => $endingDate,
+        ]);
 
-    // 4. Payment plan entries banao
-    if ($course->payment_type === 'INSTALLMENTS') {
-        $installmentCount = (int) $course->total_installments;
-        $feePerInstallment = (int) ceil($course->fee / $installmentCount);
+        // 4. Create payment plan entries
+        if ($course->payment_type === 'INSTALLMENTS') {
+            $installmentCount = (int) $course->total_installments;
+            $feePerInstallment = (int) ceil($course->fee / $installmentCount);
 
-        // last installment ko remainder ke sath adjust karo (rounding fix)
-        $totalAllocated = $feePerInstallment * $installmentCount;
-        $lastInstallmentAdjustment = $course->fee - $totalAllocated; // negative ya zero hoga
+            // Adjust the last installment with the remainder to fix rounding
+            $totalAllocated = $feePerInstallment * $installmentCount;
+            $lastInstallmentAdjustment = $course->fee - $totalAllocated; // negative or zero
 
-        for ($i = 1; $i <= $installmentCount; $i++) {
-            $dueDate = $startingDate->copy()->addMonths($i);
+            for ($i = 1; $i <= $installmentCount; $i++) {
+                $dueDate = $startingDate->copy()->addMonths($i);
 
-            $installmentFee = $feePerInstallment;
-            if ($i === $installmentCount) {
-                $installmentFee += $lastInstallmentAdjustment; // rounding difference last installment mein absorb
+                $installmentFee = $feePerInstallment;
+
+                if ($i === $installmentCount) {
+                    $installmentFee += $lastInstallmentAdjustment; // Absorb the rounding difference in the last installment
+                }
+
+                Payment_plan::create([
+                    'student_course_id'  => $studentCourse->id,
+                    'plan_name'           => 'Installment ' . $i . ' of ' . $installmentCount,
+                    'total_installments'  => $installmentCount,
+                    'total_fee'           => $course->fee,
+                    'starting_date'       => $startingDate,
+                    'due_date'            => $dueDate,
+                    'installment_no'      => $i,
+                    'fee_per_installment' => $installmentFee,
+                    'status'              => 'pending',
+                ]);
             }
-
+        } else {
+            // One-time payment — create a single plan entry
             Payment_plan::create([
                 'student_course_id'  => $studentCourse->id,
-                'plan_name'           => 'Installment ' . $i . ' of ' . $installmentCount,
-                'total_installments'  => $installmentCount,
+                'plan_name'           => 'Full Payment',
+                'total_installments' => 1,
                 'total_fee'           => $course->fee,
-                'starting_date'       => $startingDate,
-                'due_date'            => $dueDate,
-                'installment_no'       => $i,
-                'fee_per_installment' => $installmentFee,
-                'status'              => 'pending',
+                'starting_date'      => $startingDate,
+                'due_date'            => $startingDate,
+                'installment_no'     => 1,
+                'fee_per_installment' => $course->fee,
+                'status'             => 'pending',
             ]);
         }
-    } else {
-        // one-time payment — single plan entry
-        Payment_plan::create([
-            'student_course_id'  => $studentCourse->id,
-            'plan_name'           => 'Full Payment',
-            'total_installments'  => 1,
-            'total_fee'           => $course->fee,
-            'starting_date'       => $startingDate,
-            'due_date'            => $startingDate,
-            'installment_no'       => 1,
-            'fee_per_installment' => $course->fee,
-            'status'              => 'pending',
-        ]);
+
+        return redirect()->back()->with('success', 'Student successfully enrolled.');
     }
 
-    return redirect()->back()->with('success', 'Student successfully enrolled.');
-}
-    //--------------------------------------------------------------------    
+    //--------------------------------------------------------------------
     private function calculateEndingDate(Carbon $startingDate, string $duration)
     {
-        $duration = strtoupper(trim($duration)); // extra spaces/case fix
+        $duration = strtoupper(trim($duration)); // Fix extra spaces and case
 
         return match ($duration) {
             '2-MONTHS' => $startingDate->copy()->addMonths(2),
             '3-MONTHS' => $startingDate->copy()->addMonths(3),
             '6-MONTHS' => $startingDate->copy()->addMonths(6),
             'ONE YEAR' => $startingDate->copy()->addYear(),
-            default    => $startingDate->copy(), // fallback agar koi unknown value aa jaye
+            default    => $startingDate->copy(), // Fallback if an unknown value is provided
         };
     }
 }

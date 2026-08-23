@@ -12,7 +12,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-
+Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -21,6 +21,9 @@ Route::middleware('auth')->group(function () {
 });
 
 // SET VIEW PAges ROUTES
+
+//ACTIVITY LOGS
+Route::view('/activity_log', 'pages.log.activity_log')->name('activity_log');
 
 //PREVILAGES PAGES
 
@@ -75,4 +78,5 @@ Route::post('/students/enroll', [StudentController::class, 'makeEnrollment'])
 Route::get('/payment_plan/details/{id}', [PaymentPlanController::class, 'getPaymentPlanDetails'])->name('payment_plan.details');
 
 Route::post('/fetch-student-course', [StudentController::class, 'fetchStudentAndCourseData'])->name('fetch-student-course');
+});
 require __DIR__.'/auth.php';

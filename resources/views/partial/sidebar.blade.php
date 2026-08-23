@@ -1,25 +1,27 @@
 <!-- SIDEBAR -->
 <div class="col-lg-2 g-0">
 
-    <div class="side_bar w-100">
+    <aside class="side_bar w-100">
 
-        <div class="d-flex justify-content-center">
-            <img src="{{ asset('asset/files/pngegg.png') }}"
-                 alt=""
-                 class="img-fluid dashboard_img">
+        <div class="brand_block d-flex align-items-center gap-2 px-3">
+            <div class="brand_mark">E</div>
+            <div>
+                <h5 class="brand_name mb-0">Enrollix</h5>
+                <span class="brand_tag">Admin Suite</span>
+            </div>
         </div>
 
-        <div class="mt-4 w-100" id="sidebarAccordion">
+        <nav class="nav_scroll mt-2" id="sidebarAccordion">
 
             <ul class="w-100">
 
                 <li>
                     <a class="options_heading dashboard_head">
-                        Dashboard
+                        <span><i class="ri-dashboard-line"></i> Dashboard</span>
                     </a>
                 </li>
 
-                <li class="w-100">
+                <li class="nav_group">
                     <a href="#userManagement"
                        data-bs-toggle="collapse"
                        class="options_heading {{ request()->routeIs('add_user', 'add_role', 'role_permission', 'user_role') ? 'active_1' : '' }}">
@@ -27,8 +29,7 @@
                             <i class="ri-group-line"></i>
                             Team
                         </span>
-
-                        <i class="ri-arrow-right-s-line arrow"></i>
+                        <i class="ri-arrow-down-s-line arrow"></i>
                     </a>
 
                     <ul class="collapse {{ request()->routeIs('add_user', 'add_role', 'role_permission', 'user_role') ? 'show' : '' }}"
@@ -49,7 +50,7 @@
                             </a>
                         </li>
 
-                         <li class="inner_options">
+                        <li class="inner_options">
                             <a href="{{ route('add_user') }}"
                                class="user_inner {{ request()->routeIs('add_user') ? 'hight_light' : '' }}">
                                 Users
@@ -66,7 +67,7 @@
                     </ul>
                 </li>
 
-                <li>
+                <li class="nav_group">
                     <a href="#courseManagement"
                        data-bs-toggle="collapse"
                        class="options_heading {{ request()->routeIs('course.create', 'course.index', 'instructor_list') ? 'active_1' : '' }}">
@@ -74,27 +75,26 @@
                             <i class="ri-book-open-line"></i>
                             Courses
                         </span>
-
-                        <i class="ri-arrow-right-s-line arrow"></i>
+                        <i class="ri-arrow-down-s-line arrow"></i>
                     </a>
 
                     <ul class="collapse {{ request()->routeIs('course.create', 'course.index', 'instructor_list') ? 'show' : '' }}"
                         id="courseManagement"
                         data-bs-parent="#sidebarAccordion">
 
-                        <li class="{{ request()->routeIs('course.create') ? 'hight_light' : '' }} inner_options">
+                        <li class="inner_options {{ request()->routeIs('course.create') ? 'hight_light' : '' }}">
                             <a href="{{ route('course.create') }}" class="user_inner">
-                                Add Coureses
+                                Add Courses
                             </a>
                         </li>
 
-                        <li class="{{ request()->routeIs('course.index') ? 'hight_light' : '' }} inner_options">
+                        <li class="inner_options {{ request()->routeIs('course.index') ? 'hight_light' : '' }}">
                             <a href="{{ route('course.index') }}" class="user_inner">
                                 Navigate Courses
                             </a>
                         </li>
 
-                        <li class="{{ request()->routeIs('instructor_list') ? 'hight_light' : '' }} inner_options">
+                        <li class="inner_options {{ request()->routeIs('instructor_list') ? 'hight_light' : '' }}">
                             <a href="{{ route('instructor_list') }}" class="user_inner">
                                 Instructors
                             </a>
@@ -103,7 +103,7 @@
                     </ul>
                 </li>
 
-                <li>
+                <li class="nav_group">
                     <a href="#studentManagement"
                        data-bs-toggle="collapse"
                        class="options_heading {{ request()->routeIs('student.create', 'student.index', 'make_enrollment', 'student_course.index') ? 'active_1' : '' }}">
@@ -111,8 +111,7 @@
                             <i class="ri-graduation-cap-line"></i>
                             Students
                         </span>
-
-                        <i class="ri-arrow-right-s-line arrow"></i>
+                        <i class="ri-arrow-down-s-line arrow"></i>
                     </a>
 
                     <ul class="collapse {{ request()->routeIs('student.create', 'student.index', 'make_enrollment', 'student_course.index') ? 'show' : '' }}"
@@ -146,19 +145,18 @@
                     </ul>
                 </li>
 
-                <li>
+                <li class="nav_group">
                     <a href="#financeManagement"
                        data-bs-toggle="collapse"
-                       class="options_heading {{ request()->routeIs('payment_plan.index', 'payment_history.index' ,'pay_fee') ? 'active_1' : '' }}">
+                       class="options_heading {{ request()->routeIs('payment_plan.index', 'payment_history.index', 'pay_fee') ? 'active_1' : '' }}">
                         <span>
                             <i class="ri-money-dollar-circle-line"></i>
                             Finance
                         </span>
-
-                        <i class="ri-arrow-right-s-line arrow"></i>
+                        <i class="ri-arrow-down-s-line arrow"></i>
                     </a>
 
-                    <ul class="collapse {{ request()->routeIs('payment_plan.index', 'payment_history.index','pay_fee') ? 'show' : '' }}"
+                    <ul class="collapse {{ request()->routeIs('payment_plan.index', 'payment_history.index', 'pay_fee') ? 'show' : '' }}"
                         id="financeManagement"
                         data-bs-parent="#sidebarAccordion">
 
@@ -167,8 +165,8 @@
                                 Fee Book
                             </a>
                         </li>
-                      
-                        <li class="inner_options {{ request()->routeIs('pay_fee') ? 'hight_light' : '' }} ">
+
+                        <li class="inner_options {{ request()->routeIs('pay_fee') ? 'hight_light' : '' }}">
                             <a href="{{ route('pay_fee') }}" class="user_inner">
                                 Pay Fee
                             </a>
@@ -183,7 +181,7 @@
                     </ul>
                 </li>
 
-                <li>
+                <li class="nav_group">
                     <a href="#logManagement"
                        data-bs-toggle="collapse"
                        class="options_heading">
@@ -191,11 +189,10 @@
                             <i class="ri-history-line"></i>
                             Logs
                         </span>
-
-                        <i class="ri-arrow-right-s-line arrow"></i>
+                        <i class="ri-arrow-down-s-line arrow"></i>
                     </a>
 
-                    <ul class="collapse"
+                    <ul class="collapse {{ request()->routeIs('activity_log') ? 'show' : '' }}"
                         id="logManagement"
                         data-bs-parent="#sidebarAccordion">
 
@@ -210,9 +207,9 @@
 
             </ul>
 
-        </div>
+        </nav>
 
-    </div>
+    </aside>
 
 </div>
 
@@ -221,13 +218,27 @@ document.addEventListener('DOMContentLoaded', function () {
     const headings = document.querySelectorAll('.options_heading[data-bs-toggle="collapse"]');
 
     headings.forEach(function (heading) {
+        // sirf ek heading active rahe click par
         heading.addEventListener('click', function () {
-            // sab headings se active_1 hata do
             headings.forEach(h => h.classList.remove('active_1'));
-
-            // jis pe click hua usko turant active kar do
             this.classList.add('active_1');
         });
+
+        // arrow ko collapse ke show/hide ke sath rotate karo
+        const targetId = heading.getAttribute('href');
+        const collapseEl = targetId ? document.querySelector(targetId) : null;
+
+        if (collapseEl) {
+            if (collapseEl.classList.contains('show')) {
+                heading.classList.add('open');
+            }
+            collapseEl.addEventListener('show.bs.collapse', function () {
+                heading.classList.add('open');
+            });
+            collapseEl.addEventListener('hide.bs.collapse', function () {
+                heading.classList.remove('open');
+            });
+        }
     });
 });
 </script>

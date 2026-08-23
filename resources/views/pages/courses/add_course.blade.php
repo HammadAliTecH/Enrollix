@@ -103,9 +103,9 @@
                                 <select name="total_installments" id="" class="form-select">
                                     <option value="" disabled selected>---------</option>
                                     <option value="none">NONE</option>
-                                    <option value="1">PER MONTH</option>
-                                    <option value="2">PER TWO MONTHS</option>
-                                    <option value="3">PER THREE MONTHS</option>
+                                    <option value="1">ONE TIME</option>
+                                    <option value="2">TWO TIMES</option>
+                                    <option value="3">THREE TIMES</option>
                                     <option value="6">HALF YEAR</option>
                                 </select>
                             </div>
