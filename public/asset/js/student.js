@@ -1,66 +1,67 @@
 document.addEventListener('DOMContentLoaded', function () {
 
 
-// EDIT STUDENT BUTTON
-document.querySelectorAll('.edit_student').forEach(button => {
+    // EDIT STUDENT BUTTON
+    document.querySelectorAll('.edit_student').forEach(button => {
 
-    button.addEventListener('click', function () {
+        button.addEventListener('click', function () {
 
-        const studentId = this.dataset.id;
-        const student_filter_data = JSON.parse(this.dataset.student);
+            const studentId = this.dataset.id;
+            const student_filter_data = JSON.parse(this.dataset.student);
 
-        document.querySelector('.user_model_pic').src =
-            '/students_data/students_profile_images/' + student_filter_data.image;
+            document.querySelector('.user_model_pic').src =
+                '/students_data/students_profile_images/' + student_filter_data.image;
 
-        document.getElementById('student_name').value =
-            student_filter_data.name;
+            document.getElementById('student_name').value =
+                student_filter_data.name;
 
-        document.getElementById('student_gender').value =
-            student_filter_data.gender;
+            document.getElementById('student_gender').value =
+                student_filter_data.gender;
 
-        document.getElementById('student_age').value =
-            student_filter_data.age;
+            document.getElementById('student_age').value =
+                student_filter_data.age;
 
-        document.getElementById('student_cnic').value =
-            student_filter_data.cnic_number;
+            document.getElementById('student_cnic').value =
+                student_filter_data.cnic_number;
 
-        document.getElementById('student_father_name').value =
-            student_filter_data.father_name;
+            document.getElementById('student_father_name').value =
+                student_filter_data.father_name;
 
-        document.getElementById('student_father_cnic').value =
-            student_filter_data.father_cnic;
+            document.getElementById('student_father_cnic').value =
+                student_filter_data.father_cnic;
 
-        document.getElementById('student_father_occupation').value =
-            student_filter_data.father_occupation;
+            document.getElementById('student_father_occupation').value =
+                student_filter_data.father_occupation;
 
-        document.getElementById('student_contact_number').value =
-            student_filter_data.contact_number;
+            document.getElementById('student_contact_number').value =
+                student_filter_data.contact_number;
 
-        document.getElementById('student_father_cell_number').value =
-            student_filter_data.father_cell_number;
+            document.getElementById('student_father_cell_number').value =
+                student_filter_data.father_cell_number;
 
-        document.getElementById('student_email').value =
-            student_filter_data.email;
+            document.getElementById('student_email').value =
+                student_filter_data.email;
 
-        document.getElementById('student_current_education').value =
-            student_filter_data.enrolled_program;
+            document.getElementById('student_current_education').value =
+                student_filter_data.enrolled_program;
 
-        document.getElementById('student_recent_qualification').value =
-            student_filter_data.recent_education;
-        
-        document.getElementById('student_marks').value =
-            student_filter_data.marks;
+            document.getElementById('student_recent_qualification').value =
+                student_filter_data.recent_education;
 
-        document.getElementById('student_educational_place').value =
-            student_filter_data.educational_place;
+            document.getElementById('student_marks').value =
+                student_filter_data.marks;
 
-        // FORM ACTION
-        document.getElementById('studentUpdateForm').action =
-            `/student/${studentId}`;
+            document.getElementById('student_educational_place').value =
+                student_filter_data.educational_place;
+
+            // FORM ACTION
+            document.getElementById('studentUpdateForm').action =
+                `/student/${studentId}`;
+
+        });
 
     });
 
-});
 
     // ----------------------------------------------------------------------
     // DELETING STUDENT
@@ -68,72 +69,92 @@ document.querySelectorAll('.edit_student').forEach(button => {
 
         button.addEventListener('click', function () {
 
-            const studentId = this.dataset.id;            // data-id attribute se
+            const studentId = this.dataset.id; // data-id attribute
 
-            // Agar form action bhi set karni ho (route model binding ke liye)
+            // If the form action also needs to be set (for route model binding)
             const form = document.getElementById('studentDeleteForm');
 
-            form.action = `/student/${studentId}`; // ya route() se banaya hua base URL + id
+            form.action = `/student/${studentId}`; // or the base URL + id generated using route()
 
         });
 
     });
-// ----------------------------------------------------------------------
+
+
+    // ----------------------------------------------------------------------
     // VIEW STUDENT BUTTON
     document.querySelectorAll('.view_student').forEach(button => {
-       
-        button.addEventListener('click', function () {  
-               const studentData = this.dataset.student;   // data-student attribute se
 
+        button.addEventListener('click', function () {
 
-            const  student_filter_data = JSON.parse(studentData);
+            const studentData = this.dataset.student; // data-student attribute
+
+            const student_filter_data = JSON.parse(studentData);
 
             console.log(student_filter_data);
 
-            document.getElementById('set_student_image').src = '/students_data/students_profile_images/' + student_filter_data.image;
+            document.getElementById('set_student_image').src =
+                '/students_data/students_profile_images/' + student_filter_data.image;
 
-            document.getElementById('set_student_name').innerText = student_filter_data.name;
+            document.getElementById('set_student_name').innerText =
+                student_filter_data.name;
 
-            document.getElementById('set_student_gender').innerText = student_filter_data.gender;
+            document.getElementById('set_student_gender').innerText =
+                student_filter_data.gender;
 
-            document.getElementById('set_student_age').innerText = student_filter_data.age;
+            document.getElementById('set_student_age').innerText =
+                student_filter_data.age;
 
-            document.getElementById('set_student_cnic').innerText = student_filter_data.cnic_number;
+            document.getElementById('set_student_cnic').innerText =
+                student_filter_data.cnic_number;
 
-            document.getElementById('set_student_father_name').innerText = student_filter_data.father_name;
+            document.getElementById('set_student_father_name').innerText =
+                student_filter_data.father_name;
 
-            document.getElementById('set_student_father_cnic').innerText = student_filter_data.father_cnic;
+            document.getElementById('set_student_father_cnic').innerText =
+                student_filter_data.father_cnic;
 
-            document.getElementById('set_student_father_occupation').innerText = student_filter_data.father_occupation;
+            document.getElementById('set_student_father_occupation').innerText =
+                student_filter_data.father_occupation;
 
-            document.getElementById('set_student_contact_number').innerText = student_filter_data.contact_number;
+            document.getElementById('set_student_contact_number').innerText =
+                student_filter_data.contact_number;
 
-            document.getElementById('set_student_father_cell_number').innerText = student_filter_data.father_cell_number;
+            document.getElementById('set_student_father_cell_number').innerText =
+                student_filter_data.father_cell_number;
 
-            document.getElementById('set_student_email').innerText = student_filter_data.email;
+            document.getElementById('set_student_email').innerText =
+                student_filter_data.email;
 
-            document.getElementById('set_student_current_education').innerText = student_filter_data.enrolled_program;
+            document.getElementById('set_student_current_education').innerText =
+                student_filter_data.enrolled_program;
 
-            document.getElementById('set_student_recent_qualification').innerText = student_filter_data.recent_education;
+            document.getElementById('set_student_recent_qualification').innerText =
+                student_filter_data.recent_education;
 
-            document.getElementById('set_student_marks').innerText = student_filter_data.marks;
+            document.getElementById('set_student_marks').innerText =
+                student_filter_data.marks;
 
-            document.getElementById('set_student_educational_place').innerText = student_filter_data.educational_place;
+            document.getElementById('set_student_educational_place').innerText =
+                student_filter_data.educational_place;
 
-            document.getElementById('set_student_image_2').href = '/students_data/students_profile_images/' + student_filter_data.image;
+            document.getElementById('set_student_image_2').href =
+                '/students_data/students_profile_images/' + student_filter_data.image;
 
-            document.getElementById('set_student_cnic_document').href = '/students_data/students_cnic_documents/' + student_filter_data.cnic_document;
-            
+            document.getElementById('set_student_cnic_document').href =
+                '/students_data/students_cnic_documents/' +
+                student_filter_data.cnic_document;
+
         });
 
     });
 
 
-// ------------------------------------------------------
-// MAKE ENROLLMENTS
+    // ------------------------------------------------------
+    // MAKE ENROLLMENTS
 
-// search for student by cnic
- $('#student_id').select2({
+    // Search for student by CNIC
+    $('#student_id').select2({
         placeholder: 'Type student cnic...',
 
         ajax: {
@@ -156,9 +177,7 @@ document.querySelectorAll('.edit_student').forEach(button => {
     });
 
 
-
-
-  // ADD COURSE SELECT2
+    // ADD COURSE SELECT2
     $('#course_id').select2({
         placeholder: 'Type course name...',
 
@@ -181,66 +200,66 @@ document.querySelectorAll('.edit_student').forEach(button => {
         }
     });
 
-// -------------------------------------------
-// ENROLLMENT MODAL OPENING
-$('#proceed_btn').click(function () {
 
-    let student_id = $('#student_id').val();
-    let course_id = $('#course_id').val();
+    // -------------------------------------------
+    // ENROLLMENT MODAL OPENING
+    $('#proceed_btn').click(function () {
 
-    $.ajax({
+        let student_id = $('#student_id').val();
+        let course_id = $('#course_id').val();
 
-        url: '/fetch-student-course',
+        $.ajax({
 
-        type: "POST",
+            url: '/fetch-student-course',
 
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
+            type: "POST",
 
-        data: {
-            student_id: student_id,
-            course_id: course_id
-        },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
 
-        success: function (response) {
+            data: {
+                student_id: student_id,
+                course_id: course_id
+            },
 
-            // Controller se data aa gaya
+            success: function (response) {
 
-            console.log(response);
+                // Data has been received from the controller
 
-            // Modal ke andar data show karo
-            $('#stu_name_enroll').text(response.student.name);
-            $('#course_name_enroll').text(response.course.name);
-            $('#stu_gender_enroll').text(response.student.gender);
-            $('#stu_age_enroll').text(response.student.age);
-            $('#stu_phone_enroll').text(response.student.contact_number);
-            $('#stu_email_enroll').text(response.student.email);
-            $('#stu_qualification_enroll').text(response.student.recent_education);
-            $('#stu_institute_enroll').text(response.student.educational_place);
-            $('#course_id_enroll').text(response.course.id);
-            $('#course_duration_enroll').text(response.course.duration);
-            $('#instructor_enroll').text(response.course.user_id);
-            $('#payment_plan_enroll').text(response.course.payment_type);
-            $('#installments_enroll').text(response.course.total_installments);
+                console.log(response);
 
-            $('#course_id_enroll').text(response.course.id);
-            $('#course_duration_enroll').text(response.course.duration);
-            $('#instructor_enroll').text(response.course.user_id);
-            $('#payment_plan_enroll').text(response.course.payment_type);
-            $('#installments_enroll').text(response.course.total_installments);
+                // Show data inside the modal
+                $('#stu_name_enroll').text(response.student.name);
+                $('#course_name_enroll').text(response.course.name);
+                $('#stu_gender_enroll').text(response.student.gender);
+                $('#stu_age_enroll').text(response.student.age);
+                $('#stu_phone_enroll').text(response.student.contact_number);
+                $('#stu_email_enroll').text(response.student.email);
+                $('#stu_qualification_enroll').text(response.student.recent_education);
+                $('#stu_institute_enroll').text(response.student.educational_place);
+                $('#course_id_enroll').text(response.course.id);
+                $('#course_duration_enroll').text(response.course.duration);
+                $('#instructor_enroll').text(response.course.user_id);
+                $('#payment_plan_enroll').text(response.course.payment_type);
+                $('#installments_enroll').text(response.course.total_installments);
 
-            $('#hidden_student_id').val(response.student.id);
-            $('#hidden_course_id').val(response.course.id);
+                $('#course_id_enroll').text(response.course.id);
+                $('#course_duration_enroll').text(response.course.duration);
+                $('#instructor_enroll').text(response.course.user_id);
+                $('#payment_plan_enroll').text(response.course.payment_type);
+                $('#installments_enroll').text(response.course.total_installments);
 
-            // Modal open
-            $('#show_student_enrollment_modal').modal('show');
-        }
+                $('#hidden_student_id').val(response.student.id);
+                $('#hidden_course_id').val(response.course.id);
+
+                // Open modal
+                $('#show_student_enrollment_modal').modal('show');
+            }
+
+        });
 
     });
-
-});
-
 
 
 });

@@ -76,17 +76,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ----------------------------------------------------------------------
     // DELETING COURSE
-    //for deleting role name
+    // For deleting the role name
     document.querySelectorAll('.delete_course').forEach(button => {
 
         button.addEventListener('click', function () {
 
-            const courseId = this.dataset.id;            // data-id attribute se
+            const courseId = this.dataset.id; // data-id attribute
 
-            // Agar form action bhi set karni ho (route model binding ke liye)
+            // If the form action also needs to be set (for route model binding)
             const form = document.getElementById('courseDeleteForm');
 
-            form.action = `/course/${courseId}`; // ya route() se banaya hua base URL + id
+            form.action = `/course/${courseId}`; // or the base URL + id generated using route()
 
         });
 
@@ -94,35 +94,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // ----------------------------------------------------------------
-    // set model for see course indiviual
+    // Set modal for viewing an individual course
     document.querySelectorAll('.view_course').forEach(button => {
 
         button.addEventListener('click', function () {
 
-            const courseData = this.dataset.course;   // data-course attribute se
+            const courseData = this.dataset.course; // data-course attribute
 
 
-            const  course_filter_data = JSON.parse(courseData);
+            const course_filter_data = JSON.parse(courseData);
 
             console.log(course_filter_data);
 
-            // Input fields mein value set karo
-            document.getElementById('set_course_image').src = '/storage/' + course_filter_data.cover_image;
+            // Set values in input fields
+            document.getElementById('set_course_image').src =
+                '/storage/' + course_filter_data.cover_image;
 
-            document.getElementById('set_course_name').innerText = course_filter_data.name;
+            document.getElementById('set_course_name').innerText =
+                course_filter_data.name;
 
-            document.getElementById('set_course_instructor').innerText = course_filter_data.user.name;
+            document.getElementById('set_course_instructor').innerText =
+                course_filter_data.user.name;
 
-            document.getElementById('set_course_duration').innerText = course_filter_data.duration;
+            document.getElementById('set_course_duration').innerText =
+                course_filter_data.duration;
 
-            document.getElementById('set_course_payment_type').innerText = course_filter_data.payment_type;
+            document.getElementById('set_course_payment_type').innerText =
+                course_filter_data.payment_type;
 
-            document.getElementById('set_course_installments').innerText = course_filter_data.total_installments;
+            document.getElementById('set_course_installments').innerText =
+                course_filter_data.total_installments;
 
-            // Agar form action bhi set karni ho (route model binding ke liye)
+            // If the form action also needs to be set (for route model binding)
             const form = document.getElementById('userUpdateForm');
 
-            form.action = `/user/${userId}`; // ya route() se banaya hua base URL + id
+            form.action = `/user/${userId}`; // or the base URL + id generated using route()
 
         });
 

@@ -23,7 +23,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-      $this->call([PermissionSeeder::class]);
+      // $this->call([RolePermissionSeeder::class]);
+    $user =  User::create([
+      'name' => "Hammad Ali" ,
+      'email' => 'hammadmughal7979@gmail.com' ,
+      'profile_img' => 'new.jpg',
+      'password' => '12345678',
+      'email_verified_at'  => time(),
+     ]);
+    
+     $user->roles()->sync([1]);
+
+
+    
+
+    
 
     //     $permissions = collect([
     //         'student_managment',

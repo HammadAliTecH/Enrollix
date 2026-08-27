@@ -32,8 +32,8 @@
                         </div>
 
                         <div class="profile_text">
-                            <p class="name_text mb-0">Hammad Ali</p>
-                            <p class="role_text mb-0">Admin</p>
+                            <p class="name_text mb-0">{{ auth()->user()->name }}</p>
+                            <p class="role_text mb-0">{{ auth()->user()->roles->first()->name }}</p>
                         </div>
 
                         <i class="ri-arrow-down-s-line caret_icon"></i>
@@ -50,8 +50,8 @@
                                          alt="">
                                 </div>
                                 <div>
-                                    <p class="mb-0 drop_name">Hammad Ali</p>
-                                    <p class="mb-0 drop_role">Admin</p>
+                                    <p class="mb-0 drop_name">{{ auth()->user()->name }}</p>
+                                    <p class="mb-0 drop_role">{{ auth()->user()->roles->first()->name }}</p>
                                 </div>
                             </div>
                         </li>
@@ -63,7 +63,17 @@
 
                         <li><hr class="dropdown-divider"></li>
 
-                        <li><a class="dropdown-item text-danger" href="#"><i class="ri-logout-box-r-line"></i> Logout</a></li>
+                        <li>
+                             <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <x-responsive-nav-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                       <i class="ri-logout-box-r-line"></i> Logout
+                    </x-responsive-nav-link>
+                </form>
+            </li>
 
                     </ul>
 
